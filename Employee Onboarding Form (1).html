@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)file:///C:/Users/cshekhar/Desktop/Kudip/empOnboard.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Onboarding Form</title>
+  <style>
+    /* Embedded Tailwind CSS (subset of utility classes used in the form) */
+    .bg-gray-100 { background-color: #f3f4f6; }
+    .bg-gray-200 { background-color: #e5e7eb; }
+    .bg-white { background-color: #ffffff; }
+    .bg-green-600 { background-color: #059669; }
+    .bg-green-700 { background-color: #047857; }
+    .bg-blue-600 { background-color: #2563eb; }
+    .bg-blue-700 { background-color: #1d4ed8; }
+    .bg-red-600 { background-color: #dc2626; }
+    .bg-red-700 { background-color: #b91c1c; }
+    .text-white { color: #ffffff; }
+    .text-gray-600 { color: #4b5563; }
+    .text-gray-800 { color: #1f2937; }
+    .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+    .text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+    .text-md { font-size: 1rem; line-height: 1.5rem; }
+    .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+    .text-xs { font-size: 0.75rem; line-height: 1rem; }
+    .font-bold { font-weight: 700; }
+    .font-semibold { font-weight: 600; }
+    .p-4 { padding: 1rem; }
+    .px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+    .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+    .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+    .mt-8 { margin-top: 2rem; }
+    .mt-6 { margin-top: 1.5rem; }
+    .mt-4 { margin-top: 1rem; }
+    .mb-6 { margin-bottom: 1.5rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .mb-2 { margin-bottom: 0.5rem; }
+    .mb-1 { margin-bottom: 0.25rem; }
+    .gap-6 { gap: 1.5rem; }
+    .gap-4 { gap: 1rem; }
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .grid { display: grid; }
+    .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+    .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .rounded { border-radius: 0.25rem; }
+    .rounded-md { border-radius: 0.375rem; }
+    .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+    .hover\:bg-green-700:hover { background-color: #047857; }
+    .hover\:bg-blue-700:hover { background-color: #1d4ed8; }
+    .hover\:bg-red-700:hover { background-color: #b91c1c; }
+    .md\:flex-row { @media (min-width: 768px) { flex-direction: row; } }
+    .md\:w-1\/3 { @media (min-width: 768px) { width: 33.333333%; } }
+    .md\:w-2\/3 { @media (min-width: 768px) { width: 66.666667%; } }
+    .md\:grid-cols-2 { @media (min-width: 768px) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .md\:col-span-2 { @media (min-width: 768px) { grid-column: span 2 / span 2; } }
+    .hidden { display: none; }
+    .block { display: block; }
+    .cursor-pointer { cursor: pointer; }
+    .italic { font-style: italic; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+
+    /* Custom CSS for form-specific styling */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .form-section {
+      background-color: #f9fafb;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .photo-upload {
+      width: 120px;
+      height: 80px;
+      border: 2px dashed #d1d5db;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+    .photo-upload:hover {
+      background-color: #f3f4f6;
+    }
+    .doc-upload {
+      width: 40px;
+      height: 40px;
+      background-color: #e5e7eb;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+      margin-left: 8px;
+    }
+    .doc-upload:hover {
+      background-color: #d1d5db;
+      transform: scale(1.05);
+    }
+    .doc-upload.uploaded {
+      background-color: #10b981;
+      color: white;
+    }
+    .doc-upload::before {
+      content: '';
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>') no-repeat center;
+      background-size: 20px;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+    .doc-upload.uploaded::before {
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>') no-repeat center;
+      background-size: 20px;
+    }
+    label {
+      font-weight: 500;
+      color: #374151;
+    }
+    input, select, textarea {
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      padding: 4px 6px;
+      margin-top: 4px;
+      font-size: 0.75rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    input[type="file"] {
+      border: none;
+      padding: 0;
+    }
+    textarea {
+      max-width: 400px;
+      resize: vertical;
+      min-height: 80px;
+    }
+    select#religion {
+      max-width: 300px;
+      background-color: #ffffff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+    }
+    select#religion:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .toggle-section {
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.2s ease;
+    }
+    .toggle-section:hover {
+      background-color: #d1d5db;
+    }
+    .education-row, .work-experience-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 100px;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    .education-row button, .work-experience-row button {
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .work-experience-row {
+      background-color: #ffffff;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #e5e7eb;
+    }
+    .work-experience-row:hover {
+      background-color: #f3f4f6;
+    }
+    .other-details-row {
+      display: grid;
+      grid-template-columns: auto 200px 48px;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .other-details-row:last-child {
+      border-bottom: none;
+    }
+    .other-details-row.uannumber {
+      grid-template-columns: auto 200px 48px;
+    }
+    .no-data {
+      color: #6b7280;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 640px) {
+      .education-row, .work-experience-row, .other-details-row {
+        grid-template-columns: 1fr;
+      }
+      .work-experience-row button {
+        width: 100%;
+      }
+      .education-row button, .work-experience-row button {
+        height: auto;
+      }
+      .photo-upload {
+        width: 100%;
+        height: 100px;
+      }
+      .doc-upload {
+        width: 36px;
+        height: 36px;
+        margin-left: 0;
+      }
+      input, select, textarea {
+        max-width: 100%;
+      }
+      select#religion {
+        max-width: 100%;
+      }
+      .other-details-row.uannumber {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <div class="container">
+    <form class="form-section" id="onboardingForm">
+      <h2 class="text-2xl font-bold mb-6 text-gray-800">Personal Information Summary</h2>
+      <div class="flex flex-col md:flex-row gap-6">
+        <!-- Left Side: Photo Upload -->
+        <div class="md:w-1/3">
+          <label class="block mb-2">Upload Photo</label>
+          <div class="photo-upload">
+            <input type="file" accept="image/*" id="photo" class="hidden">
+            <label for="photo" class="cursor-pointer">Click to Upload</label>
+          </div>
+        </div>
+        <!-- Right Side: Name and Designation -->
+        <div class="md:w-2/3">
+          <div class="mb-4">
+            <label for="fullName" class="block">Full Name</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Enter full name" required="">
+          </div>
+          <div class="mb-4">
+            <label for="designation" class="block">Designation</label>
+            <input type="text" id="designation" name="designation" placeholder="Enter designation" required="">
+          </div>
+        </div>
+      </div>
+      <!-- Other Fields -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+        <div>
+          <label for="dob" class="block">Date of Birth</label>
+          <input type="date" id="dob" name="dob" required="">
+        </div>
+        <div>
+          <label for="gender" class="block">Gender</label>
+          <select id="gender" name="gender" required="">
+            <option value="" disabled="" selected="">Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label for="maritalStatus" class="block">Marital Status</label>
+          <select id="maritalStatus" name="maritalStatus" required="">
+            <option value="" disabled="" selected="">Select marital status</option>
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+            <option value="divorced">Divorced</option>
+            <option value="widowed">Widowed</option>
+          </select>
+        </div>
+        <div>
+          <label for="nationality" class="block">Nationality</label>
+          <input type="text" id="nationality" name="nationality" placeholder="Enter nationality" required="">
+        </div>
+        <div>
+          <label for="phone" class="block">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required="">
+        </div>
+        <div>
+          <label for="email" class="block">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="Enter email address" required="">
+        </div>
+        <div class="md:col-span-2">
+          <label for="permanentAddress" class="block">Permanent Address</label>
+          <textarea id="permanentAddress" name="permanentAddress" placeholder="e.g., 123 Maple Street, Springfield, IL 62701, USA" required="" rows="4"></textarea>
+        </div>
+        <div class="md:col-span-2">
+          <label for="presentAddress" class="block">Present Address</label>
+          <textarea id="presentAddress" name="presentAddress" placeholder="e.g., 456 Oak Avenue, Springfield, IL 62702, USA" required="" rows="4"></textarea>
+        </div>
+        <div>
+          <label for="emergencyName" class="block">Emergency Contact Name</label>
+          <input type="text" id="emergencyName" name="emergencyName" placeholder="Enter name" required="">
+        </div>
+        <div>
+          <label for="emergencyRelationship" class="block">Relationship</label>
+          <input type="text" id="emergencyRelationship" name="emergencyRelationship" placeholder="Enter relationship" required="">
+        </div>
+        <div>
+          <label for="emergencyPhone" class="block">Emergency Contact Phone</label>
+          <input type="tel" id="emergencyPhone" name="emergencyPhone" placeholder="Enter phone number" required="">
+        </div>
+      </div>
+      <!-- Educational Details Section -->
+      <div class="mt-8">
+        <div class="toggle-section bg-gray-200 p-4 rounded-md" onclick="toggleEducationSection()" role="button" aria-expanded="true" aria-controls="educationSection">
+          <h3 class="text-lg font-semibold text-gray-800">Educational Details</h3>
+          <span id="toggleIcon" class="text-gray-600">▲</span>
+        </div>
+        <div id="educationSection" class="mt-4">
+          <div id="educationList" class="mb-4" aria-live="polite">
+            <!-- Dynamic rows will be added here -->
+          <div class="education-row">
+        <div>
+          <label class="block">Education Level</label>
+          <select name="education[0][level]" required="">
+            <option value="" disabled="" selected="">Select level</option>
+            <option value="school">School Education</option>
+            <option value="higherSchool">Higher School Education</option>
+            <option value="graduation">Graduation</option>
+            <option value="masters">Masters</option>
+            <option value="other">Other Degree</option>
+          </select>
+        </div>
+        <div>
+          <label class="block">Board/Institution</label>
+          <input type="text" name="education[0][board]" placeholder="e.g., CBSE or University Name" required="">
+        </div>
+        <div>
+          <label class="block">Percentage/GPA</label>
+          <input type="text" name="education[0][grade]" placeholder="e.g., 85% or 3.8" pattern="[0-9]+(\.[0-9]+)?%?|[0-4](\.[0-9]+)?$" title="Enter percentage (e.g., 85%) or GPA (e.g., 3.8)" required="">
+        </div>
+        <div>
+          <label class="block">Issue Date</label>
+          <input type="date" name="education[0][date]" required="">
+        </div>
+        <button type="button" onclick="this.parentElement.remove()" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Remove</button>
+      </div></div>
+          <button type="button" onclick="addEducationRow()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add Education</button>
+        </div>
+      </div>
+      <!-- Prior Work Experience Section -->
+      <div class="mt-8">
+        <div class="toggle-section bg-gray-200 p-4 rounded-md" onclick="toggleWorkExperienceSection()" role="button" aria-expanded="false" aria-controls="workExperienceSection">
+          <h3 class="text-lg font-semibold text-gray-800">Prior Work Experience</h3>
+          <span id="workToggleIcon" class="text-gray-600">▼</span>
+        </div>
+        <div id="workExperienceSection" class="mt-4 hidden">
+          <div class="mb-4">
+            <p><strong>Relevant Prior Work Experience:</strong> <span id="totalWorkExperience">0.0</span> years</p>
+            <p><strong>Total Prior Work Experience:</strong> <span id="totalWorkExperienceDuplicate">0.0</span> years</p>
+            <p><strong>Onboarded Company Experience:</strong> <span id="onboardedExperience">0.0</span> years</p>
+            <input type="hidden" id="onboardingDate" name="onboardingDate" value="2025-05-24">
+          </div>
+          <h4 class="text-md font-semibold text-gray-800 mb-2">Prior Work Experience Details</h4>
+          <div id="workExperienceList" class="mb-4" aria-live="polite">
+            <p id="noWorkExperience" class="no-data hidden">No work experience added</p>
+            <!-- Dynamic rows will be added here -->
+          <div class="work-experience-row">
+        <div>
+          <label for="company_0" class="block">Company</label>
+          <input type="text" id="company_0" name="workExperience[0][company]" placeholder="e.g., ABC Corp" required="">
+        </div>
+        <div>
+          <label for="startDate_0" class="block">Start Date</label>
+          <input type="date" id="startDate_0" name="workExperience[0][startDate]" required="" onblur="validateDates(this)">
+        </div>
+        <div>
+          <label for="endDate_0" class="block">End Date</label>
+          <input type="date" id="endDate_0" name="workExperience[0][endDate]" onblur="validateDates(this)">
+        </div>
+        <div>
+          <label for="designation_0" class="block">Designation</label>
+          <input type="text" id="designation_0" name="workExperience[0][designation]" placeholder="e.g., Software Engineer" required="">
+        </div>
+        <button type="button" onclick="this.parentElement.remove(); updateWorkExperience();" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Remove</button>
+      </div></div>
+          <button type="button" onclick="addWorkExperienceRow()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add Work Experience</button>
+        </div>
+      </div>
+      <!-- Other Personal Details Section -->
+      <div class="mt-8">
+        <div class="toggle-section bg-gray-200 p-4 rounded-md" onclick="toggleOtherDetailsSection()" role="button" aria-expanded="false" aria-controls="otherDetailsSection">
+          <h3 class="text-lg font-semibold text-gray-800">Other Personal Details</h3>
+          <span id="otherDetailsToggleIcon" class="text-gray-600">▼</span>
+        </div>
+        <div id="otherDetailsSection" class="mt-4 hidden">
+          <div class="mb-4 bg-white p-4 rounded-md shadow-sm" aria-live="polite">
+            <div class="mb-4">
+              <label for="religion" class="block mb-1">Religion</label>
+              <select id="religion" name="religion">
+                <option value="" disabled="" selected="">Select religion</option>
+                <option value="hindu">Hindu</option>
+                <option value="muslim">Muslim</option>
+                <option value="christian">Christian</option>
+                <option value="sikh">Sikh</option>
+                <option value="jain">Jain</option>
+                <option value="buddhist">Buddhist</option>
+                <option value="parsi">Parsi</option>
+                <option value="jewish">Jewish</option>
+                <option value="bahai">Baháʼí</option>
+                <option value="other">Other</option>
+                <option value="none">None</option>
+              </select>
+            </div>
+            <div class="other-details-row">
+              <label for="aadharNumber" class="block">Aadhar Number</label>
+              <input type="text" id="aadharNumber" name="aadharNumber" placeholder="e.g., 1234 5678 9012" pattern="[0-9]{12}" title="Enter a 12-digit Aadhar number">
+              <div class="doc-upload doc-upload-aadhar">
+                <input type="file" accept="image/*,.pdf" id="aadharFile" name="aadharFile" class="hidden">
+                <label for="aadharFile" class="sr-only">Upload Aadhar</label>
+              </div>
+            </div>
+            <div class="other-details-row">
+              <label for="panNumber" class="block">PAN Number</label>
+              <input type="text" id="panNumber" name="panNumber" placeholder="e.g., ABCDE1234F" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" title="Enter a valid PAN number (e.g., ABCDE1234F)">
+              <div class="doc-upload doc-upload-pan">
+                <input type="file" accept="image/*,.pdf" id="panFile" name="panFile" class="hidden">
+                <label for="panFile" class="sr-only">Upload PAN</label>
+              </div>
+            </div>
+            <div class="other-details-row">
+              <label for="passportNumber" class="block">Passport Number</label>
+              <input type="text" id="passportNumber" name="passportNumber" placeholder="e.g., A1234567">
+              <div class="doc-upload doc-upload-passport">
+                <input type="file" accept="image/*,.pdf" id="passportFile" name="passportFile" class="hidden">
+                <label for="passportFile" class="sr-only">Upload Passport</label>
+              </div>
+            </div>
+            <div class="other-details-row uannumber">
+              <label for="uanNumber" class="block">UAN Number</label>
+              <input type="text" id="uanNumber" name="uanNumber" placeholder="e.g., 123456789012" pattern="[0-9]{12}" title="Enter a 12-digit UAN number">
+              <div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-6">
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit</button>
+      </div>
+    </form>
+  </div>
+  <script>
+    function toggleEducationSection() {
+      const section = document.getElementById('educationSection');
+      const toggle = document.querySelector('.toggle-section[aria-controls="educationSection"]');
+      const toggleIcon = document.getElementById('toggleIcon');
+      section.classList.toggle('hidden');
+      toggle.setAttribute('aria-expanded', !section.classList.contains('hidden'));
+      toggleIcon.textContent = section.classList.contains('hidden') ? '▼' : '▲';
+    }
+
+    function addEducationRow() {
+      const educationList = document.getElementById('educationList');
+      const rowCount = educationList.children.length;
+      const row = document.createElement('div');
+      row.className = 'education-row';
+      row.innerHTML = `
+        <div>
+          <label class="block">Education Level</label>
+          <select name="education[${rowCount}][level]" required>
+            <option value="" disabled selected>Select level</option>
+            <option value="school">School Education</option>
+            <option value="higherSchool">Higher School Education</option>
+            <option value="graduation">Graduation</option>
+            <option value="masters">Masters</option>
+            <option value="other">Other Degree</option>
+          </select>
+        </div>
+        <div>
+          <label class="block">Board/Institution</label>
+          <input type="text" name="education[${rowCount}][board]" placeholder="e.g., CBSE or University Name" required>
+        </div>
+        <div>
+          <label class="block">Percentage/GPA</label>
+          <input type="text" name="education[${rowCount}][grade]" placeholder="e.g., 85% or 3.8" pattern="[0-9]+(\\.[0-9]+)?%?|[0-4](\\.[0-9]+)?$" title="Enter percentage (e.g., 85%) or GPA (e.g., 3.8)" required>
+        </div>
+        <div>
+          <label class="block">Issue Date</label>
+          <input type="date" name="education[${rowCount}][date]" required>
+        </div>
+        <button type="button" onclick="this.parentElement.remove()" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Remove</button>
+      `;
+      educationList.appendChild(row);
+    }
+
+    function toggleWorkExperienceSection() {
+      const section = document.getElementById('workExperienceSection');
+      const toggle = document.querySelector('.toggle-section[aria-controls="workExperienceSection"]');
+      const toggleIcon = document.getElementById('workToggleIcon');
+      section.classList.toggle('hidden');
+      toggle.setAttribute('aria-expanded', !section.classList.contains('hidden'));
+      toggleIcon.textContent = section.classList.contains('hidden') ? '▼' : '▲';
+    }
+
+    function addWorkExperienceRow() {
+      const workExperienceList = document.getElementById('workExperienceList');
+      const noDataMessage = document.getElementById('noWorkExperience');
+      const rowCount = workExperienceList.querySelectorAll('.work-experience-row').length;
+      const row = document.createElement('div');
+      row.className = 'work-experience-row';
+      row.innerHTML = `
+        <div>
+          <label for="company_${rowCount}" class="block">Company</label>
+          <input type="text" id="company_${rowCount}" name="workExperience[${rowCount}][company]" placeholder="e.g., ABC Corp" required>
+        </div>
+        <div>
+          <label for="startDate_${rowCount}" class="block">Start Date</label>
+          <input type="date" id="startDate_${rowCount}" name="workExperience[${rowCount}][startDate]" required onblur="validateDates(this)">
+        </div>
+        <div>
+          <label for="endDate_${rowCount}" class="block">End Date</label>
+          <input type="date" id="endDate_${rowCount}" name="workExperience[${rowCount}][endDate]" onblur="validateDates(this)">
+        </div>
+        <div>
+          <label for="designation_${rowCount}" class="block">Designation</label>
+          <input type="text" id="designation_${rowCount}" name="workExperience[${rowCount}][designation]" placeholder="e.g., Software Engineer" required>
+        </div>
+        <button type="button" onclick="this.parentElement.remove(); updateWorkExperience();" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Remove</button>
+      `;
+      workExperienceList.appendChild(row);
+      noDataMessage.classList.add('hidden');
+      updateWorkExperience();
+    }
+
+    function validateDates(input) {
+      const row = input.closest('.work-experience-row');
+      const startDateInput = row.querySelector('input[name$="[startDate]"]');
+      const endDateInput = row.querySelector('input[name$="[endDate]"]');
+      const startDate = startDateInput.value;
+      const endDate = endDateInput.value;
+      if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+        alert('End Date must be after Start Date.');
+        endDateInput.value = '';
+      }
+      updateWorkExperience();
+    }
+
+    function updateWorkExperience() {
+      const rows = document.querySelectorAll('#workExperienceList .work-experience-row');
+      const noDataMessage = document.getElementById('noWorkExperience');
+      if (rows.length === 0) {
+        noDataMessage.classList.remove('hidden');
+      } else {
+        noDataMessage.classList.add('hidden');
+      }
+      let totalYears = 0;
+      rows.forEach(row => {
+        const startDate = row.querySelector('input[name$="[startDate]"]').value;
+        const endDate = row.querySelector('input[name$="[endDate]"]').value || new Date().toISOString().split('T')[0];
+        if (startDate) {
+          const start = new Date(startDate);
+          const end = new Date(endDate);
+          if (start <= end) {
+            const diffYears = (end - start) / (1000 * 60 * 60 * 24 * 365.25);
+            totalYears += diffYears;
+          }
+        }
+      });
+      const totalExperienceElement = document.getElementById('totalWorkExperience');
+      const totalExperienceDuplicateElement = document.getElementById('totalWorkExperienceDuplicate');
+      totalExperienceElement.textContent = totalYears.toFixed(1);
+      totalExperienceDuplicateElement.textContent = totalYears.toFixed(1);
+
+      const onboardingDate = document.getElementById('onboardingDate').value;
+      const currentDate = new Date();
+      const onboardedYears = (currentDate - new Date(onboardingDate)) / (1000 * 60 * 60 * 24 * 365.25);
+      document.getElementById('onboardedExperience').textContent = onboardedYears.toFixed(1);
+    }
+
+    function toggleOtherDetailsSection() {
+      const section = document.getElementById('otherDetailsSection');
+      const toggle = document.querySelector('.toggle-section[aria-controls="otherDetailsSection"]');
+      const toggleIcon = document.getElementById('otherDetailsToggleIcon');
+      section.classList.toggle('hidden');
+      toggle.setAttribute('aria-expanded', !section.classList.contains('hidden'));
+      toggleIcon.textContent = section.classList.contains('hidden') ? '▼' : '▲';
+    }
+
+    function handleFileUpload(inputId, uploadDivClass) {
+      const input = document.getElementById(inputId);
+      const uploadDiv = document.querySelector(`.${uploadDivClass}`);
+      if (!input || !uploadDiv) {
+        console.error(`File upload setup failed for ${inputId}: input or div not found`);
+        return;
+      }
+      input.addEventListener('change', function(event) {
+        console.log(`File input changed for ${inputId}`);
+        const file = event.target.files[0];
+        if (file) {
+          console.log(`File selected: ${file.name}, type: ${file.type}`);
+          if (!file.type.startsWith('image/') && file.type !== 'application/pdf') {
+            alert('Please upload an image or PDF file.');
+            this.value = '';
+            uploadDiv.classList.remove('uploaded');
+            uploadDiv.title = '';
+            return;
+          }
+          uploadDiv.classList.add('uploaded');
+          uploadDiv.title = file.name;
+        } else {
+          console.log('No file selected');
+          uploadDiv.classList.remove('uploaded');
+          uploadDiv.title = '';
+        }
+      });
+    }
+
+    // Initialize file upload handlers
+    handleFileUpload('photo', 'photo-upload');
+    handleFileUpload('aadharFile', 'doc-upload-aadhar');
+    handleFileUpload('panFile', 'doc-upload-pan');
+    handleFileUpload('passportFile', 'doc-upload-passport');
+
+    // Initialize with one empty row for education and work experience
+    addEducationRow();
+    addWorkExperienceRow();
+
+    // Form submission
+    document.querySelector('form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const rows = document.querySelectorAll('#workExperienceList .work-experience-row');
+      let valid = true;
+      rows.forEach(row => {
+        const startDate = row.querySelector('input[name$="[startDate]"]').value;
+        const endDate = row.querySelector('input[name$="[endDate]"]').value;
+        if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+          valid = false;
+          alert('Please ensure all End Dates are after Start Dates.');
+        }
+      });
+      if (!valid) return;
+      const formData = new FormData(this);
+      const data = {};
+      formData.forEach((value, key) => {
+        if (key.includes('[')) {
+          const match = key.match(/(education|workExperience)\[(\d+)\]\[(\w+)\]/);
+          if (match) {
+            const [_, type, index, subKey] = match;
+            if (!data[type]) data[type] = [];
+            if (!data[type][index]) data[type][index] = {};
+            data[type][index][subKey] = value;
+          }
+        } else {
+          data[key] = value;
+        }
+      });
+      console.log(data);
+    });
+  </script>
+
+</body></html>
