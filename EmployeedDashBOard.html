@@ -1,0 +1,214 @@
+<div class="employee-dashboard container mx-auto p-4 space-y-6">
+  <!-- Profile Card -->
+  <section class="card shadow-md p-4 rounded-lg text-center space-y-4">
+    <!-- Profile Picture -->
+    <div class="flex justify-center">
+      <input type="file" id="profile-upload" hidden>
+      <label for="profile-upload" class="cursor-pointer relative">
+        <img src="assets/profile-placeholder.png" 
+             alt="Profile Picture" 
+             class="w-24 h-24 rounded-full border mx-auto hover:opacity-80 transition-opacity" />
+        <span class="absolute bottom-0 right-0 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">Edit</span>
+      </label>
+    </div>
+    <!-- Employee Details -->
+    <div>
+      <h2 class="text-xl font-bold">Chandra</h2>
+      <p>Employee ID: EMP00123</p>
+      <p>Manager: Vikash Singh</p>
+      <p>Joining Date: Jan 10, 2022</p>
+    </div>
+  </section>
+
+  <!-- Leave Overview -->
+  <details class="card shadow-md p-4 rounded-lg">
+    <summary class="text-lg font-semibold cursor-pointer">Leave Overview</summary>
+    <div class="mt-4 grid grid-cols-3 gap-4">
+      <select class="form-select w-full" id="leave-type" onchange="updateLeaveBalance()">
+  <option value="" disabled selected>Select Leave Type</option>
+  <option value="earned">Earned Leave</option>
+  <option value="sick">Sick Leave</option>
+  <option value="casual">Casual Leave</option>
+</select>
+
+      <div>
+        <p>Balance:</p>
+        <p class="text-xl font-bold text-green-600" id="leave-balance">12</p>
+      </div>
+      <div>
+        <p>Last Taken:</p>
+        <p id="last-taken">May 10, 2025</p>
+      </div>
+    </div>
+    <div class="mt-4">
+      <button class="btn btn-primary">Apply for Leave</button>
+    </div>
+    <!-- Leave Status Dropdown -->
+    <div class="mt-4">
+      <label class="block mb-1">Leave Status</label>
+      <select class="form-select w-full" id="leave-status" onchange="updateLeaveHistory()">
+        <option value="" selected disabled>Select Status</option>
+        <option value="pending">Approval Pending</option>
+        <option value="rejected">Rejected Leave</option>
+        <option value="approved">Approved Leave</option>
+      </select>
+    </div>
+    <div class="mt-4" id="leave-history">
+      <p class="font-semibold">Last 5 Pending Leaves:</p>
+      <table class="w-full border-collapse mt-2">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="border p-2 text-left">Leave From</th>
+            <th class="border p-2 text-left">Leave To</th>
+            <th class="border p-2 text-left">Leave Applied Date</th>
+            <th class="border p-2 text-left">Approved Leave Date</th>
+            <th class="border p-2 text-left">Manager Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Populated dynamically by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <!-- Attendance -->
+  <details class="card shadow-md p-4 rounded-lg">
+    <summary class="text-lg font-semibold cursor-pointer">Attendance</summary>
+    <div class="mt-4 flex justify-between items-center">
+      <div>
+        <p>Check-in: <strong>09:10 AM</strong></p>
+        <p>Check-out: <strong>--</strong></p>
+        <p>Hours Worked Today: <strong>3.5 hrs</strong></p>
+      </div>
+      <div>
+        <button class="btn btn-success mr-2">Clock In</button>
+        <button class="btn btn-danger">Clock Out</button>
+      </div>
+    </div>
+  </details>
+
+  <!-- Payroll Details -->
+  <details class="card shadow-md p-4 rounded-lg">
+    <summary class="text-lg font-semibold cursor-pointer">Payroll Details</summary>
+    <div class="mt-4">
+      <label>Select Month:</label>
+      <select class="form-select w-full mb-4">
+        <option>May 2025</option>
+        <option>April 2025</option>
+        <option>March 2025</option>
+      </select>
+      <div class="grid grid-cols-2 gap-4">
+        <div><p>Basic:</p><strong>₹40,000</strong></div>
+        <div><p>Allowances:</p><strong>₹10,000</strong></div>
+        <div><p>Deductions:</p><strong>₹3,000</strong></div>
+        <div><p>Net Pay:</p><strong>₹47,000</strong></div>
+      </div>
+      <button class="btn btn-secondary mt-4">Download Payslip</button>
+    </div>
+  </details>
+
+  <!-- Company Announcements -->
+  <details class="card shadow-md p-4 rounded-lg">
+    <summary class="text-lg font-semibold cursor-pointer">Announcements</summary>
+    <div class="mt-4 space-y-2">
+      <div>📢 Team Outing on June 5</div>
+      <div>🎉 Work from Home Policy Updated</div>
+      <div>📌 Submit IT Declarations by June 10</div>
+    </div>
+  </details>
+</div>
+
+<script>
+  // Mock data for leave balances
+  const leaveData = {
+    earned: { balance: 12, lastTaken: "May 10, 2025" },
+    sick: { balance: 8, lastTaken: "Apr 15, 2025" },
+    casual: { balance: 5, lastTaken: "Mar 20, 2025" }
+  };
+
+  // Updated mock data for leave history with consistent structure
+  const leaveHistory = {
+    pending: [
+      { leaveFrom: "Jan 15, 2025", leaveTo: "Jan 16, 2025", appliedDate: "Jan 5, 2025", approvedDate: "Pending", manager: "Jane Smith" },
+      { leaveFrom: "Feb 10, 2025", leaveTo: "Feb 10, 2025", appliedDate: "Feb 1, 2025", approvedDate: "Pending", manager: "Jane Smith" },
+      { leaveFrom: "Mar 5, 2025", leaveTo: "Mar 5, 2025", appliedDate: "Feb 25, 2025", approvedDate: "Pending", manager: "Jane Smith" },
+      { leaveFrom: "Apr 20, 2025", leaveTo: "Apr 22, 2025", appliedDate: "Apr 10, 2025", approvedDate: "Pending", manager: "Jane Smith" },
+      { leaveFrom: "May 1, 2025", leaveTo: "May 2, 2025", appliedDate: "Apr 20, 2025", approvedDate: "Pending", manager: "Jane Smith" }
+    ],
+    rejected: [
+      { leaveFrom: "Dec 10, 2024", leaveTo: "Dec 10, 2024", appliedDate: "Dec 1, 2024", approvedDate: "Rejected", manager: "Jane Smith" },
+      { leaveFrom: "Nov 5, 2024", leaveTo: "Nov 6, 2024", appliedDate: "Oct 25, 2024", approvedDate: "Rejected", manager: "Jane Smith" },
+      { leaveFrom: "Oct 15, 2024", leaveTo: "Oct 15, 2024", appliedDate: "Oct 5, 2024", approvedDate: "Rejected", manager: "Jane Smith" },
+      { leaveFrom: "Sep 20, 2024", leaveTo: "Sep 21, 2024", appliedDate: "Sep 10, 2024", approvedDate: "Rejected", manager: "Jane Smith" },
+      { leaveFrom: "Aug 25, 2024", leaveTo: "Aug 25, 2024", appliedDate: "Aug 15, 2024", approvedDate: "Rejected", manager: "Jane Smith" }
+    ],
+    approved: [
+      { leaveFrom: "Apr 10, 2025", leaveTo: "Apr 12, 2025", appliedDate: "Mar 25, 2025", approvedDate: "Mar 28, 2025", manager: "Jane Smith" },
+      { leaveFrom: "Mar 15, 2025", leaveTo: "Mar 15, 2025", appliedDate: "Mar 1, 2025", approvedDate: "Mar 5, 2025", manager: "Jane Smith" },
+      { leaveFrom: "Feb 20, 2025", leaveTo: "Feb 21, 2025", appliedDate: "Feb 10, 2025", approvedDate: "Feb 12, 2025", manager: "Jane Smith" },
+      { leaveFrom: "Jan 25, 2025", leaveTo: "Jan 26, 2025", appliedDate: "Jan 15, 2025", approvedDate: "Jan 18, 2025", manager: "Jane Smith" },
+      { leaveFrom: "Dec 15, 2024", leaveTo: "Dec 15, 2024", appliedDate: "Dec 1, 2024", approvedDate: "Dec 5, 2024", manager: "Jane Smith" }
+    ]
+  };
+
+  function updateLeaveBalance() {
+  const leaveType = document.getElementById("leave-type").value;
+  const balanceElement = document.getElementById("leave-balance");
+  const lastTakenElement = document.getElementById("last-taken");
+
+  if (!leaveType) {
+    balanceElement.textContent = "--";
+    lastTakenElement.textContent = "--";
+    return;
+  }
+
+  balanceElement.textContent = leaveData[leaveType].balance;
+  lastTakenElement.textContent = leaveData[leaveType].lastTaken;
+}
+
+  function updateLeaveHistory() {
+  const status = document.getElementById("leave-status").value;
+  const historyElement = document.getElementById("leave-history");
+
+  if (!status) {
+    historyElement.innerHTML = ""; // Clear content if nothing selected
+    return;
+  }
+
+  const statusText = status.charAt(0).toUpperCase() + status.slice(1);
+
+historyElement.innerHTML = `
+  <p class="font-semibold text-lg mb-3 text-gray-800">Last 5 ${statusText} Leaves</p>
+  <div class="overflow-x-auto rounded-lg shadow ring-1 ring-gray-200">
+    <table class="min-w-full divide-y divide-gray-200 text-sm">
+      <thead class="bg-blue-600 text-white">
+        <tr>
+          <th class="px-6 py-3 text-left font-medium">Leave From</th>
+          <th class="px-6 py-3 text-left font-medium">Leave To</th>
+          <th class="px-6 py-3 text-left font-medium">Applied On</th>
+          <th class="px-6 py-3 text-left font-medium">Approved Date</th>
+          <th class="px-6 py-3 text-left font-medium">Manager</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-100">
+        ${leaveHistory[status].map((item, index) => `
+          <tr class="${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-blue-50 transition">
+            <td class="px-6 py-3 whitespace-nowrap">${item.leaveFrom}</td>
+            <td class="px-6 py-3 whitespace-nowrap">${item.leaveTo}</td>
+            <td class="px-6 py-3 whitespace-nowrap">${item.appliedDate}</td>
+            <td class="px-6 py-3 whitespace-nowrap">${item.approvedDate}</td>
+            <td class="px-6 py-3 whitespace-nowrap">${item.manager}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  </div>
+`;
+
+}
+
+  // Initialize with default values
+  updateLeaveBalance();
+  updateLeaveHistory();
+</script>
